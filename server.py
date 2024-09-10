@@ -18,18 +18,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 break
 
             if data.isdigit():
-                print("Recieved string "+ str(data))
+                print("Recieved string "+ data)
+                print(type(data))
                 
-                for i in str(data):
-                    sum += int(i)
+                dataSum = 0
+                for i in data:
+                    i = int(i)
+                    dataSum += i
 
-                data = sum
-                print("Sending Digit Sum result", data)
+                print("Sending Digit Sum result", dataSum)
+                data = dataSum
                 
 
             else:
                 print("Invalid Input, Exiting Server Application")
                 data = "Not A Number error, Exiting Client Application"   
 
-            
-            conn.sendall(data.encode())
+            print("Sending", data)
+            conn.sendall(str(data).encode())
