@@ -10,29 +10,27 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     conn, addr = s.accept()
     with conn:
         print(f"Connected by {addr}")
-        while True:
-            data = conn.recv(1024)
-            data = data.decode()
+        # while True:
+        data = conn.recv(1024)
+        value = data.decode()
 
-            if not data:
-                break
+        print(type(value))
+        print("Recieved string", value)
 
-            if data.isdigit():
-                print("Recieved string "+ data)
-                print(type(data))
-                
-                dataSum = 0
-                for i in data:
-                    i = int(i)
-                    dataSum += i
+        if data.isdigit():
+            print("Recieved string "+ data)
+            
+            dataSum = 0
+            for i in data:
+                i = int(i)
+                dataSum += i
 
-                print("Sending Digit Sum result", dataSum)
-                data = dataSum
-                
+            data = dataSum
+            
 
-            else:
-                print("Invalid Input, Exiting Server Application")
-                data = "Not A Number error, Exiting Client Application"   
+        else:
+            print("Invalid Input, Exiting Server Application")
+            data = "Not A Number error, Exiting Client Application"   
 
-            print("Sending", data)
-            conn.sendall(str(data).encode())
+        print("Sending", data)
+        conn.sendall(str(data).encode())
